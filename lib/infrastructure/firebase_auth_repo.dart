@@ -63,4 +63,28 @@ class FirebaseAuthRepo extends IAuthRepo {
         ((error, _) =>
             CleanFailure(tag: "Registration", error: error.toString())),
       );
+
+  @override
+  TaskEither<CleanFailure, UserProfile> checkAuth() =>
+      TaskEither.tryCatch(() async {
+        final user = auth.currentUser;
+        if (user != null) {
+          final data = await db
+              .collection('users')
+              .doc(user.uid)
+              .get()
+              .then((value) => value.data());
+
+          if (data != null) {
+            final profile = UserProfile.fromMap(data);
+            return profile;
+          } else {
+            throw 'Profile data was not found.';
+          }
+        } else {
+          throw 'you are not logged in';
+        }
+      },
+          (error, _) =>
+              CleanFailure(tag: "Check Auth", error: error.toString()));
 }

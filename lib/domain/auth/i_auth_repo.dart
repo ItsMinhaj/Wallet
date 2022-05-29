@@ -7,4 +7,6 @@ abstract class IAuthRepo {
   TaskEither<CleanFailure, UserProfile> login(LoginBody loginBody);
 
   TaskEither<CleanFailure, UserProfile> registration(SignupBody signupBody);
+
+  TaskEither<CleanFailure, UserProfile> checkAuth();
 }

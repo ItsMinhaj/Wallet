@@ -31,6 +31,9 @@ class UserProfile extends Equatable {
     );
   }
 
+  factory UserProfile.empty() =>
+      const UserProfile(name: "", id: "", email: "", sources: []);
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,

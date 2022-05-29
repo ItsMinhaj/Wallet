@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1048207733364",
+    "project_id": "wallet-78d55",
+    "storage_bucket": "wallet-78d55.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1048207733364:android:a97bba8fc0af8d0e13d721",
+        "android_client_info": {
+          "package_name": "com.example.moneybag"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1048207733364-435p1ldnfrt4l6786ir7i975ra4bmgru.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmk_iQQhdkYELHERKnKWfr7gCfF21ZbxI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1048207733364-435p1ldnfrt4l6786ir7i975ra4bmgru.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

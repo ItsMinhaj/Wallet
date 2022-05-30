@@ -49,7 +49,7 @@ class UserProfile extends Equatable {
       id: map['id'] as String,
       email: map['email'] as String,
       sources: List<Source>.from(
-        (map['sources'] as List<int>).map<Source>(
+        (map['sources'] as List).map<Source>(
           (x) => Source.fromMap(x as Map<String, dynamic>),
         ),
       ),

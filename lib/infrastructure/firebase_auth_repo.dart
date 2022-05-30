@@ -87,4 +87,9 @@ class FirebaseAuthRepo extends IAuthRepo {
       },
           (error, _) =>
               CleanFailure(tag: "Check Auth", error: error.toString()));
+
+  @override
+  Future<void> logout() async {
+    await auth.signOut();
+  }
 }

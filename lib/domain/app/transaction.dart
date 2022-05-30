@@ -6,11 +6,13 @@ import 'package:equatable/equatable.dart';
 class Transaction extends Equatable {
   final double amount;
   final DateTime time;
+  final String source;
   final String transactionType; // is Taka incoming or outgoing...
   final String note;
   const Transaction({
     required this.amount,
     required this.time,
+    required this.source,
     required this.transactionType,
     required this.note,
   });
@@ -18,12 +20,14 @@ class Transaction extends Equatable {
   Transaction copyWith({
     double? amount,
     DateTime? time,
+    String? source,
     String? transactionType,
     String? note,
   }) {
     return Transaction(
       amount: amount ?? this.amount,
       time: time ?? this.time,
+      source: source ?? this.source,
       transactionType: transactionType ?? this.transactionType,
       note: note ?? this.note,
     );
@@ -33,6 +37,7 @@ class Transaction extends Equatable {
     return <String, dynamic>{
       'amount': amount,
       'time': time.millisecondsSinceEpoch,
+      'source': source,
       'transactionType': transactionType,
       'note': note,
     };
@@ -42,6 +47,7 @@ class Transaction extends Equatable {
     return Transaction(
       amount: map['amount'] as double,
       time: DateTime.fromMillisecondsSinceEpoch(map['time'] as int),
+      source: map['source'] as String,
       transactionType: map['transactionType'] as String,
       note: map['note'] as String,
     );
@@ -56,5 +62,13 @@ class Transaction extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [amount, time, transactionType, note];
+  List<Object> get props {
+    return [
+      amount,
+      time,
+      source,
+      transactionType,
+      note,
+    ];
+  }
 }

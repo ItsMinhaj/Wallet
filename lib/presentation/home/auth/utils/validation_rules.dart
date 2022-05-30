@@ -1,4 +1,12 @@
 class ValidationRules {
+  static String? name(String? text) {
+    if (text == null || text.isEmpty) {
+      return "Enter your name.";
+    } else {
+      return null;
+    }
+  }
+
   static String? email(String? text) {
     if (text == null || text.isEmpty) {
       return "Please enter something";

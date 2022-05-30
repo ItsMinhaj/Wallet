@@ -24,7 +24,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   registration(SignupBody body) async {
-    state = state.copyWith(loading: true);
+    state = AuthState.init().copyWith(loading: true);
     final response = await authRepo.registration(body).run();
 
     state = response
@@ -41,5 +41,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
         .fold((l) => state.copyWith(failure: l),
             (r) => state.copyWith(profile: r))
         .copyWith(loading: false);
+  }
+
+  logout() async {
+    await authRepo.logout();
+    state = AuthState.init();
   }
 }

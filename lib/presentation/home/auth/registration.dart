@@ -1,17 +1,41 @@
+import 'package:clean_api/clean_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:moneybag/application/auth/auth_provider.dart';
+import 'package:moneybag/application/auth/auth_state.dart';
+import 'package:moneybag/domain/app/user_profile.dart';
+import 'package:moneybag/domain/auth/signup_body.dart';
 import 'package:moneybag/presentation/home/auth/utils/validation_rules.dart';
+import 'package:moneybag/presentation/home/homepage.dart';
 
-class Registration extends HookWidget {
+class Registration extends HookConsumerWidget {
   const Registration({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final nameController = useTextEditingController();
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
     final showPassword = useState(false);
     final formkey = useMemoized((() => GlobalKey<FormState>()));
+
+    final state = ref.watch(authProvider);
+
+    ref.listen<AuthState>(authProvider, ((previous, next) {
+      if (previous != next && !next.loading) {
+        if (next.failure != CleanFailure.none() ||
+            next.profile == UserProfile.empty()) {
+          if (next.failure != CleanFailure.none()) {
+            Logger.e(next.failure);
+            CleanFailureDialogue.show(context, failure: next.failure);
+          }
+        } else {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: ((context) => const Homepage())));
+        }
+      }
+    }));
 
     return Scaffold(
       body: SafeArea(
@@ -31,7 +55,7 @@ class Registration extends HookWidget {
               ),
               TextFormField(
                 controller: nameController,
-                validator: ValidationRules.email,
+                validator: ValidationRules.name,
                 decoration: const InputDecoration(
                   labelText: "Name",
                   enabledBorder: OutlineInputBorder(
@@ -88,7 +112,12 @@ class Registration extends HookWidget {
               const SizedBox(height: 50),
               ElevatedButton(
                   onPressed: () {
-                    if (formkey.currentState!.validate()) {}
+                    if (formkey.currentState?.validate() ?? false) {
+                      ref.read(authProvider.notifier).registration(SignupBody(
+                          name: nameController.text,
+                          email: emailController.text,
+                          password: passwordController.text));
+                    }
                   },
                   child: const Text("Register")),
               const SizedBox(height: 20),

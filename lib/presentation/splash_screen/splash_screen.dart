@@ -25,6 +25,9 @@ class SplashScreen extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         if (next.failure != CleanFailure.none() ||
             next.profile == UserProfile.empty()) {
+          if (next.failure != CleanFailure.none()) {
+            Logger.e(next.failure);
+          }
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: ((context) => const LoginPage())));
         } else {
